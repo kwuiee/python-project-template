@@ -1,0 +1,48 @@
+exclude: bd_rnaseq/workflow/(?:fusion_circos|bin)/
+repos:
+- hooks:
+  - args:
+    - --no-markdown-linebreak-ext
+    files: ''
+    id: trailing-whitespace
+  - id: check-case-conflict
+  - id: end-of-file-fixer
+  repo: git@github.com:pre-commit/pre-commit-hooks.git
+  rev: v3.2.0
+- hooks:
+  - args:
+    - --settings-path=.isort.cfg
+    entry: isort
+    id: isort
+    language: system
+    name: isort
+    stages:
+    - commit
+    types:
+    - python
+  - entry: black
+    id: black
+    language: system
+    name: black
+    stages:
+    - commit
+    types:
+    - python
+  - args:
+    - --rcfile=.pylintrc
+    entry: pylint
+    id: pylint
+    language: system
+    name: pylint
+    stages:
+    - commit
+    types:
+    - python
+    verbose: true
+  repo: local
+- hooks:
+  - additional_dependencies:
+    - black==19.10b0
+    id: blacken-docs
+  repo: git@github.com:asottile/blacken-docs.git
+  rev: v1.8.0
